@@ -61,7 +61,7 @@ jobs:
 
           Threat model: \`protocol/FRP-2.0.0-draft.1/security/THREAT-MODEL.md\`
 
-          Known limitations: \`KNOWN-LIMITATIONS.md\`
+          Known limitations: \`protocol/FRP-2.0.0-draft.1/WHAT_FINALITY_DOES_NOT_PROVE.md\`
 
           Challenge: \`break-finality/README.md\`
 
