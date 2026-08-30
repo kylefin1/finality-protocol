@@ -18,7 +18,7 @@ jobs:
         run: |
           mkdir -p /tmp/finality-source
           tar -xzf bootstrap-source.tar.gz -C /tmp/finality-source
-          rsync -a --delete --exclude=.git /tmp/finality-source/ ./
+          rsync -a --delete --exclude=.git --exclude=.github/workflows --exclude=bootstrap-source.tar.gz /tmp/finality-source/ ./
       - name: Publish source tree
         run: |
           git config user.name "github-actions[bot]"
