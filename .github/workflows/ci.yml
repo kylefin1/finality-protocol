@@ -1,0 +1,71 @@
+name: Public conformance and adversarial CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conformance:
+    name: Frozen release / ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Reproduce frozen release
+        shell: bash
+        run: ./protocol/FRP-2.0.0-draft.1/reproduce.sh
+      - name: Public attack harness
+        shell: bash
+        run: node --experimental-strip-types break-finality/harness/run-attacks.mts
+      - name: Tooling tests
+        shell: bash
+        run: python3 -m unittest discover -s tests -v
+
+  repository-controls:
+    name: Schemas / boundary / evidence / manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - run: python3 tools/validate_schemas.py
+      - run: python3 tools/check_boundary.py
+      - run: python3 tools/build_scoreboard.py --records evidence/records --output evidence/scoreboard.json --check
+      - run: python3 tools/generate_infrastructure_manifest.py --check
+
+  differential:
+    name: Cross-verifier differential
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: TypeScript vectors
+        run: node --experimental-strip-types protocol/FRP-2.0.0-draft.1/conformance/run-conformance.mts protocol/FRP-2.0.0-draft.1/conformance/golden-vectors.json
+      - name: Python vectors
+        run: python3 protocol/FRP-2.0.0-draft.1/python/finality_verify.py conformance protocol/FRP-2.0.0-draft.1/conformance/golden-vectors.json
+      - name: WASM terminal kernel
+        run: node protocol/FRP-2.0.0-draft.1/wasm/build-wasm.mjs
+      - name: Bounded formal companion
+        run: python3 protocol/FRP-2.0.0-draft.1/formal/model_check.py
