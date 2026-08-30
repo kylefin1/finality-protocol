@@ -3,23 +3,16 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
 import sys
-from pathlib import Path
 
 import atheris
 
-ROOT = Path(__file__).resolve().parents[1]
-MODULE_PATH = ROOT / "protocol/FRP-2.0.0-draft.1/python/finality_verify.py"
-SPEC = importlib.util.spec_from_file_location("finality_verify", MODULE_PATH)
-assert SPEC and SPEC.loader
-VERIFY = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(VERIFY)
-IMPORT_SPEC = importlib.util.spec_from_file_location("evidence_import", ROOT / "tools/evidence_import.py")
-assert IMPORT_SPEC and IMPORT_SPEC.loader
-EVIDENCE_IMPORT = importlib.util.module_from_spec(IMPORT_SPEC)
-IMPORT_SPEC.loader.exec_module(EVIDENCE_IMPORT)
+# The build script stages these reviewed modules beside this entry point so
+# PyInstaller can discover and bundle them. This avoids runtime dependencies on
+# a repository checkout after ClusterFuzzLite relocates the packaged fuzzer.
+import evidence_import as EVIDENCE_IMPORT
+import finality_verify as VERIFY
 
 
 def test_one_input(data: bytes) -> None:
@@ -42,7 +35,9 @@ def test_one_input(data: bytes) -> None:
         elif mode == 4 and isinstance(value, list):
             VERIFY.merkle_root(value)
         elif mode == 5 and isinstance(value, dict):
-            VERIFY.parse_time(value.get("observedAt"))
+            observed_at = value.get("observedAt")
+            if isinstance(observed_at, str):
+                VERIFY.parse_time(observed_at)
         elif mode == 6 and isinstance(value, dict):
             contract = value.get("contract", {})
             VERIFY.evaluate(
