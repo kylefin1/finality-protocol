@@ -1,0 +1,47 @@
+name: External evidence intake
+
+on:
+  pull_request:
+    paths:
+      - "evidence/submissions/**"
+      - "evidence/records/**"
+      - "tools/evidence_import.py"
+      - "tools/verify_external_results.py"
+      - "tools/build_scoreboard.py"
+
+permissions:
+  contents: read
+
+jobs:
+  import-fail-closed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Recompute every submission bundle
+        shell: bash
+        run: |
+          found=0
+          while IFS= read -r -d '' submission; do
+            found=1
+            bundle_root="$(dirname "$submission")"
+            record="/tmp/$(basename "$bundle_root").record.json"
+            python3 tools/evidence_import.py --submission "$submission" --bundle-root "$bundle_root" --output "$record"
+            python3 tools/verify_external_results.py "$record"
+          done < <(find evidence/submissions -mindepth 2 -name submission.json -print0)
+          if [[ "$found" -eq 0 ]]; then
+            echo "No external submission bundle in this change."
+          fi
+      - name: Reject unsupported promoted records and verify scoreboard
+        shell: bash
+        run: |
+          while IFS= read -r -d '' record; do
+            python3 tools/verify_external_results.py "$record"
+          done < <(find evidence/records -name '*.json' -print0)
+          python3 tools/build_scoreboard.py --records evidence/records --output evidence/scoreboard.json --check
+
+# Pull-request code is never executed here. Technical reproduction of an
+# outside implementation requires an isolated, unprivileged reviewer-controlled
+# environment and a separately recorded result.
