@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """ClusterFuzzLite/Atheris entry point for public parser and semantic surfaces."""
 
-from __future__ import annotations
-
 import json
 import sys
 
