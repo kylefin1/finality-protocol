@@ -2,6 +2,8 @@
 name: Complete zero-dollar source publication
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
