@@ -4,6 +4,11 @@ on:
   push:
     tags: ["external-proof-v*"]
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing publication tag to verify
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -14,8 +19,9 @@ jobs:
     outputs:
       hashes: ${{ steps.subject.outputs.hashes }}
     permissions:
-      contents: read
+      contents: write
       id-token: write
+      attestations: write
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
@@ -31,20 +37,67 @@ jobs:
           mkdir -p artifacts
           tar --sort=name --mtime='UTC 2026-08-30' --owner=0 --group=0 \
             --numeric-owner --exclude=.git --exclude=artifacts \
-            -czf artifacts/finality-external-proof.tar.gz .
+            -czf artifacts/Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz .
+          cp external-proof-manifest.json artifacts/FINALITY_EXTERNAL_PROOF_MANIFEST.json
+          cat > artifacts/FINALITY_ZERO_DOLLAR_EXTERNAL_PROOF_PUBLICATION_REPORT.md <<EOF
+          # Finality Zero-Dollar External Proof Publication
+
+          - Protocol: FRP-2.0.0-draft.1
+          - Kernel: FSK-1.0.0
+          - Publication: ${GITHUB_REF_NAME}
+          - Source commit: ${GITHUB_SHA}
+          - License: Apache-2.0
+          - Contributions: DCO 1.1
+          - Trademarks: Finality trademarks reserved
+          - Evidence ceiling: seller-controlled; independently inspectable and open to falsification
+
+          Verify after download:
+
+          \`sha256sum -c FINALITY_ZERO_DOLLAR_EXTERNAL_PROOF_SHA256SUMS.txt\`
+
+          Reproduce after extraction:
+
+          \`make prepublish && make test && make formal\`
+
+          Threat model: \`protocol/FRP-2.0.0-draft.1/security/THREAT-MODEL.md\`
+
+          Known limitations: \`KNOWN-LIMITATIONS.md\`
+
+          Challenge: \`break-finality/README.md\`
+
+          Independent implementation guide: \`implementation-challenge/README.md\`
+
+          Independent implementations: 0  
+          External falsification results: 0  
+          Buyer-controlled runs: 0  
+          Production/platform adoption: 0
+          EOF
+          (cd artifacts && sha256sum \
+            Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz \
+            FINALITY_EXTERNAL_PROOF_MANIFEST.json \
+            FINALITY_ZERO_DOLLAR_EXTERNAL_PROOF_PUBLICATION_REPORT.md \
+            > FINALITY_ZERO_DOLLAR_EXTERNAL_PROOF_SHA256SUMS.txt)
       - name: Calculate provenance subject
         id: subject
         shell: bash
-        run: echo "hashes=$(sha256sum artifacts/finality-external-proof.tar.gz | base64 -w0)" >> "$GITHUB_OUTPUT"
+        run: echo "hashes=$(sha256sum artifacts/Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz | base64 -w0)" >> "$GITHUB_OUTPUT"
       - uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad
       - name: Keyless sign release artifact
-        run: cosign sign-blob --yes artifacts/finality-external-proof.tar.gz --bundle artifacts/finality-external-proof.tar.gz.sigstore.json
+        run: cosign sign-blob --yes artifacts/Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz --bundle artifacts/Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz.sigstore.json
+      - name: Attest canonical release archive
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a
+        with:
+          subject-path: artifacts/Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz
+      - name: Upload canonical GitHub Release assets
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" artifacts/* --clobber
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: signed-release-artifact
           path: |
-            artifacts/finality-external-proof.tar.gz
-            artifacts/finality-external-proof.tar.gz.sigstore.json
+            artifacts/*
           if-no-files-found: error
 
   provenance:
@@ -56,4 +109,31 @@ jobs:
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@f7dd8c54c2067bafc12ca7a55595d5ee9b75204a
     with:
       base64-subjects: ${{ needs.build.outputs.hashes }}
-      upload-assets: false
+      upload-assets: true
+      private-repository: true
+
+  verify-release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build, provenance]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      attestations: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Download published release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir downloaded
+          gh release download "$GITHUB_REF_NAME" --dir downloaded
+      - name: Verify published checksums and attestation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd downloaded
+          sha256sum -c FINALITY_ZERO_DOLLAR_EXTERNAL_PROOF_SHA256SUMS.txt
+          gh attestation verify Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz --repo "$GITHUB_REPOSITORY"
+          test -s Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz.sigstore.json
+          test -n "$(find . -maxdepth 1 -name '*.intoto.jsonl' -print -quit)"
