@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "Cite the exact frozen Finality Reality Protocol release and repository commit tested."
+title: "Finality Reality Protocol external verification surface"
+type: software
+version: "FRP-2.0.0-draft.1 / FSK-1.0.0"
+date-released: 2026-08-29
+authors:
+  - family-names: "Hughes"
+    given-names: "Kyle"
+url: "https://finalitygroup.com"
+repository-code: "https://github.com/kylefin1/finality-protocol"
+license: "Apache-2.0"
+abstract: >-
+  Frozen protocol semantics, verifiers, formal model, conformance vectors, and
+  public infrastructure for independently implementing or falsifying the
+  disclosed Finality Reality Protocol release.
+keywords:
+  - outcome assurance
+  - distributed systems
+  - protocol verification
+  - falsification

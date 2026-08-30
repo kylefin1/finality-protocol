@@ -1,0 +1,21 @@
+{
+  "title": "Finality Reality Protocol external verification surface",
+  "description": "Frozen FRP-2.0.0-draft.1 / FSK-1.0.0 semantics and zero-dollar infrastructure for independent implementation and falsification. Seller-controlled artifacts are not independent assurance.",
+  "creators": [
+    {
+      "name": "Finality Group"
+    }
+  ],
+  "keywords": [
+    "outcome assurance",
+    "distributed systems",
+    "protocol verification",
+    "falsification"
+  ],
+  "upload_type": "software",
+  "version": "FRP-2.0.0-draft.1-FSK-1.0.0",
+  "publication_date": "2026-08-29",
+  "access_right": "open",
+  "license": "Apache-2.0",
+  "notes": "Licensed under Apache-2.0. Finality trademarks and conformance marks are reserved. A DOI proves deposit identity, not protocol correctness or independent assurance."
+}

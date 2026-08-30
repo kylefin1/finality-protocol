@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.DS_Store
+node_modules/
+coverage/
+fuzz-artifacts/
+artifacts/test-output/
+*.sigstore.json

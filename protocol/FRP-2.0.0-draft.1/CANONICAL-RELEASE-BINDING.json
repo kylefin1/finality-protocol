@@ -1,0 +1,17 @@
+{
+  "artifactType": "FinalityCanonicalReleaseBinding",
+  "bindingVersion": "1.0.0",
+  "protocolVersion": "FRP-2.0.0-draft.1",
+  "kernelVersion": "FSK-1.0.0",
+  "scopeVersion": "SCOPE-26.0.0",
+  "canonicalManifest": "https://scope.finalitygroup.com/.well-known/finality-release.json",
+  "canonicalApi": "https://scope.finalitygroup.com/api/v1/release",
+  "strategy": "The immutable open-package manifest binds every disclosed package file. The live canonical manifest separately binds that package to the exact production source commit, Site artifact and deployment version, avoiding a self-referential archive hash.",
+  "externalEvidence": {
+    "buyerControlled": "HOLD",
+    "independentAssurance": "HOLD",
+    "independentCompatibleImplementations": 0,
+    "signedOutsideFalsificationRecords": 0,
+    "productionPlatformDependencies": 0
+  }
+}

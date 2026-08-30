@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/schemas/external-submission.schema.json",
+  "title": "External Evidence Submission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "submissionType",
+    "schemaVersion",
+    "evidenceKind",
+    "identity",
+    "repositoryUrl",
+    "commit",
+    "releaseTested",
+    "artifact",
+    "ciRunUrl",
+    "report",
+    "submittedAt"
+  ],
+  "properties": {
+    "submissionType": { "const": "FINALITY_EXTERNAL_EVIDENCE_SUBMISSION" },
+    "schemaVersion": { "const": "1.0" },
+    "evidenceKind": { "enum": ["INDEPENDENT_IMPLEMENTATION", "OUTSIDE_FALSIFICATION"] },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "identifier", "independenceDisclosure"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "organization": { "type": "string" },
+        "identifier": { "type": "string", "minLength": 3 },
+        "independenceDisclosure": { "type": "string", "minLength": 1 },
+        "isBot": { "type": "boolean", "default": false }
+      }
+    },
+    "repositoryUrl": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/[^/]+/[^/]+/?$" },
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "releaseTested": { "const": "FRP-2.0.0-draft.1-20260829" },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "ciRunUrl": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/.+/actions/runs/" },
+    "report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "conformanceResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bundlePath", "certificateIdentity", "oidcIssuer"],
+      "properties": {
+        "bundlePath": { "type": "string", "minLength": 1 },
+        "certificateIdentity": { "type": "string", "minLength": 1 },
+        "oidcIssuer": { "type": "string", "format": "uri" }
+      }
+    },
+    "claimedResult": { "type": "string", "description": "Untrusted assertion; importer never promotes evidence from this field." },
+    "submittedAt": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "evidenceKind": { "const": "INDEPENDENT_IMPLEMENTATION" } } },
+      "then": { "required": ["conformanceResult"] }
+    }
+  ]
+}

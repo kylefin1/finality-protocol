@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/protocol/v2/schemas/state-source-contract.schema.json",
+  "title": "Finality State-Source Contract",
+  "type": "object",
+  "required": ["protocol", "protocolVersion", "sourceContractId", "version", "institution", "systemType", "trustDomain", "context", "authoritativeFor", "observationMechanism", "timestampSource", "freshness", "authentication", "integrity", "availability", "dependency", "conflictPriority", "retention", "privacyClassification", "status", "validFrom"],
+  "properties": {
+    "protocol": {"const": "finality-reality"}, "protocolVersion": {"type": "string"}, "sourceContractId": {"type": "string", "minLength": 4}, "version": {"type": "string"}, "institution": {"type": "string"}, "systemType": {"type": "string"}, "trustDomain": {"type": "string"}, "context": {"type": "string"},
+    "authoritativeFor": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["predicate", "subject", "scope"], "properties": {"predicate": {"type": "string"}, "subject": {"type": "string"}, "scope": {"type": "string"}}, "additionalProperties": false}},
+    "observationMechanism": {"type": "string"}, "timestampSource": {"type": "string"},
+    "freshness": {"type": "object", "required": ["maximumAgeMs", "stale"], "properties": {"maximumAgeMs": {"type": "integer", "minimum": 0}, "stale": {"enum": ["REJECT", "INDETERMINATE"]}}, "additionalProperties": false},
+    "authentication": {"type": "object", "required": ["method"], "properties": {"method": {"type": "string"}}, "additionalProperties": false},
+    "integrity": {"type": "object", "required": ["hashAlgorithm", "signatureRequired", "allowedSignatureAlgorithms"], "properties": {"hashAlgorithm": {"const": "sha-256"}, "signatureRequired": {"type": "boolean"}, "allowedSignatureAlgorithms": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "availability": {"enum": ["AVAILABLE", "DEGRADED", "UNAVAILABLE"]},
+    "dependency": {"type": "object", "required": ["independenceRoot", "upstream"], "properties": {"independenceRoot": {"type": "string"}, "upstream": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}}, "additionalProperties": false},
+    "conflictPriority": {"type": "integer"}, "retention": {"type": "string"}, "privacyClassification": {"type": "string"}, "status": {"enum": ["ACTIVE", "REVOKED", "SUPERSEDED"]}, "validFrom": {"type": "string", "format": "date-time"}, "validUntil": {"type": "string", "format": "date-time"}, "extensions": {"type": "object"}
+  },
+  "additionalProperties": false
+}

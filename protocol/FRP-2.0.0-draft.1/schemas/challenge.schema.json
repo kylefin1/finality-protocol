@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/protocol/v2/schemas/challenge.schema.json",
+  "title": "Finality Certificate Challenge",
+  "type": "object",
+  "required": ["artifactType", "challengeId", "certificateHash", "challenger", "authorityReference", "reason", "newEvidenceCommitments", "raisedAt", "signature"],
+  "properties": {"artifactType": {"const": "FinalityCertificateChallenge"}, "challengeId": {"type": "string"}, "certificateHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "challenger": {"type": "string"}, "authorityReference": {"type": "string"}, "reason": {"type": "string"}, "newEvidenceCommitments": {"type": "array", "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "raisedAt": {"type": "string", "format": "date-time"}, "signature": {"type": "object"}},
+  "additionalProperties": false
+}

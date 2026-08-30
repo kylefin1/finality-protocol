@@ -1,0 +1,12 @@
+*.sh text eol=lf
+*.py text eol=lf
+*.ts text eol=lf
+*.mts text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+
+# Preserve the byte-for-byte frozen protocol archive, including historical
+# Markdown hard-break spaces and TLA+ alignment whitespace.
+protocol/FRP-2.0.0-draft.1/** -text whitespace=-trailing-space

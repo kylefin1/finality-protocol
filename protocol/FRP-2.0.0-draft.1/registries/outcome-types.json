@@ -1,0 +1,15 @@
+{
+  "registry": "FinalityOutcomeTypeRegistry",
+  "registry_version": "1.0.0",
+  "status": "FINALITY_GROUP_REFERENCE_REGISTRY_NOT_STANDARDS_BODY",
+  "entries": [
+    {"namespace": "finality://finance/account-closed/v1", "type": "ACCOUNT_CLOSED", "profile": "finance", "status": "REFERENCE"},
+    {"namespace": "finality://payments/payment-settled/v1", "type": "PAYMENT_SETTLED", "profile": "payments", "status": "REFERENCE"},
+    {"namespace": "finality://identity/access-revoked/v1", "type": "ACCESS_REVOKED", "profile": "identity", "status": "REFERENCE"},
+    {"namespace": "finality://insurance/claim-paid/v1", "type": "CLAIM_PAID", "profile": "insurance", "status": "REFERENCE"},
+    {"namespace": "finality://commerce/order-fulfilled/v1", "type": "ORDER_FULFILLED", "profile": "commerce", "status": "REFERENCE"},
+    {"namespace": "finality://risk/remediation-complete/v1", "type": "REMEDIATION_COMPLETE", "profile": "risk", "status": "REFERENCE"},
+    {"namespace": "finality://healthcare/authorization-closed/v1", "type": "AUTHORIZATION_CLOSED", "profile": "healthcare", "status": "REFERENCE"},
+    {"namespace": "finality://robotics/machine-safe-state/v1", "type": "MACHINE_SAFE_STATE", "profile": "robotics", "status": "REFERENCE"}
+  ]
+}

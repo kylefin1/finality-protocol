@@ -1,0 +1,25 @@
+{
+  "scoreboardType": "FINALITY_ZERO_DOLLAR_EXTERNAL_PROOF",
+  "schemaVersion": "1.0",
+  "release": "FRP-2.0.0-draft.1-20260829",
+  "generatedFrom": "evidence/records",
+  "metrics": {
+    "githubForks": 0,
+    "externalImplementationAttempts": 0,
+    "externalConformanceRuns": 0,
+    "externalAttackReports": 0,
+    "signedReports": 0,
+    "dois": 0,
+    "externalDiscrepancies": 0,
+    "independentCompatibleImplementations": 0,
+    "outsideFalsificationRecords": 0
+  },
+  "exclusions": [
+    "Finality-controlled repositories or forks",
+    "Finality seller test runs",
+    "bots",
+    "anonymous or unattributable submissions",
+    "self-reported PASS values not independently recomputed"
+  ],
+  "claim": "External evidence remains zero until an attributable outside submission is verified and reproduced."
+}

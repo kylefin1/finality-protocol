@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/protocol/v2/schemas/counterproof.schema.json",
+  "title": "Finality Counterproof",
+  "type": "object",
+  "required": ["protocol", "artifactType", "contractHash", "requestedOutcome", "subject", "classification", "failedPredicates", "contradictions", "observationCommitments", "issuedAt", "counterproofHash"],
+  "properties": {"protocol": {"const": "finality-reality"}, "artifactType": {"const": "FinalityCounterproof"}, "contractHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "requestedOutcome": {"type": "object"}, "subject": {"type": "object"}, "classification": {"enum": ["OPEN", "PENDING", "CONTRADICTED", "CURE_REQUIRED", "FAILED", "REOPENED", "SUPERSEDED"]}, "failedPredicates": {"type": "array"}, "contradictions": {"type": "array"}, "observationCommitments": {"type": "object"}, "issuedAt": {"type": "string", "format": "date-time"}, "counterproofHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+  "additionalProperties": false
+}

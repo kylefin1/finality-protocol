@@ -1,0 +1,35 @@
+name: Independent implementation
+description: Submit an attributable compatible-implementation record.
+title: "[Implementation] "
+labels: [independent-implementation, needs-reproduction]
+body:
+  - type: input
+    id: repository
+    attributes:
+      label: Repository and exact commit
+    validations:
+      required: true
+  - type: input
+    id: ci
+    attributes:
+      label: CI run URL
+    validations:
+      required: true
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Artifact and report hashes
+    validations:
+      required: true
+  - type: textarea
+    id: discrepancies
+    attributes:
+      label: Discrepancies and limitations
+    validations:
+      required: true
+  - type: textarea
+    id: independence
+    attributes:
+      label: Identity, reused code, and independence disclosure
+    validations:
+      required: true

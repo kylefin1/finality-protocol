@@ -1,0 +1,21 @@
+{
+  "catalogType": "PUBLIC_FALSIFICATION_CATALOG",
+  "catalogVersion": "1.0",
+  "release": "FRP-2.0.0-draft.1-20260829",
+  "scope": "Disclosed public safety properties; not the proprietary attack corpus",
+  "families": [
+    "FALSE_FINAL_MANDATORY_CONTRADICTION",
+    "STOP_BYPASS",
+    "STALE_EVIDENCE",
+    "TEMPORAL_DURABILITY",
+    "CORRELATED_SOURCE_QUORUM",
+    "UNSIGNED_REQUIRED_OBSERVATION",
+    "EVIDENCE_MUTATION",
+    "CONTRACT_SUBSTITUTION",
+    "MANIFEST_SUBSTITUTION",
+    "PROTOCOL_VERSION_MISMATCH",
+    "REOPEN_TRIGGER",
+    "LINEAGE_MUTATION",
+    "CROSS_VERIFIER_DIFFERENTIAL"
+  ]
+}

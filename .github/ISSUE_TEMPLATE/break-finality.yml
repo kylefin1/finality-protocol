@@ -1,0 +1,39 @@
+name: Break Finality report
+description: Submit a falsification attempt without implying endorsement.
+title: "[Falsification] "
+labels: [falsification, needs-reproduction]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not post secrets, protected data, or exploitable third-party details. Use a private security advisory for vulnerabilities."
+  - type: input
+    id: release
+    attributes:
+      label: Frozen release
+      value: FRP-2.0.0-draft.1-20260829
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: Independent repository and commit
+    validations:
+      required: true
+  - type: textarea
+    id: methods
+    attributes:
+      label: Methods and attacks attempted
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Successful attacks, failed attacks, and discrepancies
+    validations:
+      required: true
+  - type: textarea
+    id: independence
+    attributes:
+      label: Identity and independence disclosure
+    validations:
+      required: true

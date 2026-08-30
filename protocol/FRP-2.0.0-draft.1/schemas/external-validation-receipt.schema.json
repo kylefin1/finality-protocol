@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/protocol/v2/schemas/external-validation-receipt.schema.json",
+  "title": "External Validation Receipt",
+  "type": "object",
+  "required": ["validation_receipt_type", "reviewer", "reviewer_independence_status", "organization", "release_id", "release_hash", "protocol_version", "test_protocol_hash", "cases_executed", "cases_reproduced", "false_final_observed", "discrepancies", "result", "timestamp", "signature"],
+  "properties": {
+    "validation_receipt_type": {"const": "EVR"}, "reviewer": {"type": "object"}, "reviewer_independence_status": {"enum": ["SELF_DECLARED", "FINALITY_AFFILIATED", "INDEPENDENCE_REVIEWED", "UNKNOWN"]}, "organization": {"type": "string"}, "release_id": {"type": "string"}, "release_hash": {"type": "string"}, "protocol_version": {"type": "string"}, "test_protocol_hash": {"type": "string"}, "cases_executed": {"type": "integer", "minimum": 0}, "cases_reproduced": {"type": "integer", "minimum": 0}, "false_final_observed": {"type": "integer", "minimum": 0}, "discrepancies": {"type": "array"}, "result": {"enum": ["REPRODUCED", "PARTIALLY_REPRODUCED", "NOT_REPRODUCED", "DISPUTED"]}, "timestamp": {"type": "string", "format": "date-time"}, "signature": {"type": "object"}
+  },
+  "additionalProperties": false
+}

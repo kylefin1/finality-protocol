@@ -1,0 +1,52 @@
+{
+  "reportType": "FINALITY_ZERO_DOLLAR_EXTERNAL_PROOF_BUILD_RESULT",
+  "generatedAt": "2026-08-30T12:31:36Z",
+  "release": "FRP-2.0.0-draft.1-20260829",
+  "protocol": "FRP-2.0.0-draft.1",
+  "kernel": "FSK-1.0.0",
+  "sellerControlledTests": {
+    "frozenArtifactsVerified": 56,
+    "typescriptVectorsPassed": 32,
+    "pythonVectorsPassed": 32,
+    "verifierClassificationDisagreements": 0,
+    "publicAttackCasesPassed": 44,
+    "publicAttackCasesExecuted": 44,
+    "observedFalseFinal": 0,
+    "boundedModelStates": 2374,
+    "boundedModelTransitions": 5804,
+    "boundedModelFailures": 0,
+    "toolingUnitTestsPassed": 7,
+    "toolingUnitTestsExecuted": 7,
+    "publicSchemasAudited": 14,
+    "publicPrivateBoundaryFindings": 0
+  },
+  "infrastructure": {
+    "publicProtocolPackage": "PASS",
+    "breakFinalityChallenge": "PASS",
+    "implementationChallenge": "PASS",
+    "githubCiDefinitions": "PASS_STATIC_LINT",
+    "codeqlDefinition": "PASS_STATIC_LINT",
+    "openssfScorecardDefinition": "PASS_STATIC_LINT",
+    "clusterFuzzLiteDefinition": "PASS_STATIC_LINT",
+    "formalModel": "PASS_SELLER_BOUNDED_EXECUTION",
+    "slsaProvenanceDefinition": "PASS_STATIC_LINT",
+    "sigstoreSigningDefinition": "PASS_STATIC_LINT",
+    "zenodoMetadata": "PASS_SCHEMA_SHAPE",
+    "reportTemplates": "PASS",
+    "privateCoreBoundary": "PASS_SELLER_SCAN"
+  },
+  "notYetCreated": {
+    "githubHostedWorkflowRun": true,
+    "slsaAttestation": true,
+    "signedExternalReport": true,
+    "zenodoDoi": true,
+    "independentAssurance": true
+  },
+  "externalEvidence": {
+    "independentCompatibleImplementations": 0,
+    "outsideFalsificationRecords": 0,
+    "buyerAuthoredExecutedCases": 0,
+    "productionPlatformDependencies": 0
+  },
+  "claimBoundary": "Seller-controlled build evidence only. Hosted CI and outside participation must be observed separately."
+}

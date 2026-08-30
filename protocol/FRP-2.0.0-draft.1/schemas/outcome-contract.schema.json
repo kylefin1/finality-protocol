@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/protocol/v2/schemas/outcome-contract.schema.json",
+  "title": "Finality Outcome Contract v2",
+  "type": "object",
+  "required": ["protocol", "protocolVersion", "contractType", "contractVersion", "contractId", "namespace", "outcome", "subject", "context", "authority", "requiredState", "contradictions", "reopenIf", "finality", "stopConditions"],
+  "properties": {
+    "protocol": {"const": "finality-reality"},
+    "protocolVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "contractType": {"const": "FinalityOutcomeContract"},
+    "contractVersion": {"type": "string", "minLength": 1},
+    "contractId": {"type": "string", "minLength": 8},
+    "namespace": {"type": "string", "pattern": "^finality://"},
+    "outcome": {
+      "type": "object",
+      "required": ["id", "type", "description", "settlementPhase"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "type": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "settlementPhase": {"enum": ["REQUESTED", "ACCEPTED", "EXECUTED", "OBSERVED", "PROPAGATED", "SETTLED", "DURABLE", "FINAL"]}
+      },
+      "additionalProperties": false
+    },
+    "subject": {
+      "type": "object",
+      "required": ["type", "id", "scope"],
+      "properties": {"type": {"type": "string"}, "id": {"type": "string"}, "scope": {"type": "string"}},
+      "additionalProperties": false
+    },
+    "context": {"type": "string", "minLength": 1},
+    "authority": {
+      "type": "object",
+      "required": ["required"],
+      "properties": {"required": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}, "externalReference": {"type": "string"}},
+      "additionalProperties": false
+    },
+    "requiredState": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/predicate"}},
+    "contradictions": {"type": "array", "items": {"$ref": "#/$defs/contradiction"}},
+    "reopenIf": {"type": "array", "items": {"$ref": "#/$defs/contradiction"}},
+    "finality": {
+      "type": "object",
+      "required": ["rule", "minimumEvidenceAgeMs", "consistencyWindowMs"],
+      "properties": {"rule": {"enum": ["ALL_REQUIRED", "M_OF_N"]}, "threshold": {"type": "integer", "minimum": 1}, "minimumEvidenceAgeMs": {"type": "integer", "minimum": 0}, "consistencyWindowMs": {"type": "integer", "minimum": 0}},
+      "additionalProperties": false
+    },
+    "stopConditions": {
+      "type": "object",
+      "required": ["falseFinal", "receiptVerificationFailure", "buyerStopBypass"],
+      "properties": {"falseFinal": {"const": 0}, "receiptVerificationFailure": {"const": 0}, "buyerStopBypass": {"const": 0}},
+      "additionalProperties": false
+    },
+    "extensions": {"type": "object", "additionalProperties": {"type": "object", "required": ["critical", "value"], "properties": {"critical": {"type": "boolean"}, "value": {}}, "additionalProperties": false}}
+  },
+  "$defs": {
+    "operator": {"enum": ["EQUALS", "NOT_EQUALS", "GT", "GTE", "LT", "LTE", "IN", "PRESENT"]},
+    "predicate": {
+      "type": "object",
+      "required": ["id", "predicate", "operator", "mandatory", "sourceContracts", "sourcePolicy", "temporal"],
+      "properties": {
+        "id": {"type": "string"}, "predicate": {"type": "string"}, "operator": {"$ref": "#/$defs/operator"}, "expected": {}, "mandatory": {"type": "boolean"},
+        "sourceContracts": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "sourcePolicy": {"type": "object", "required": ["mode"], "properties": {"mode": {"enum": ["ALL_REQUIRED", "M_OF_N", "TRUST_DOMAIN_THRESHOLD"]}, "threshold": {"type": "integer", "minimum": 1}, "mandatorySources": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}, "minimumTrustDomains": {"type": "integer", "minimum": 1}}, "additionalProperties": false},
+        "temporal": {"type": "object", "required": ["mode"], "properties": {"mode": {"enum": ["TRUE_NOW", "ALWAYS_FOR", "TRUE_BEFORE_DEADLINE"]}, "durationMs": {"type": "integer", "minimum": 0}, "deadline": {"type": "string", "format": "date-time"}}, "additionalProperties": false}
+      },
+      "additionalProperties": false
+    },
+    "contradiction": {
+      "type": "object",
+      "required": ["id", "predicate", "operator", "sourceContracts", "class", "mandatory"],
+      "properties": {"id": {"type": "string"}, "predicate": {"type": "string"}, "operator": {"$ref": "#/$defs/operator"}, "expected": {}, "sourceContracts": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true}, "class": {"enum": ["HARD", "SOFT", "TEMPORAL", "SOURCE", "DEPENDENCY", "AUTHORITY", "FRESHNESS", "INTEGRITY", "POLICY"]}, "mandatory": {"type": "boolean"}},
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

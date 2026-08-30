@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/schemas/evidence-record.schema.json",
+  "title": "Verified External Evidence Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "recordType",
+    "recordVersion",
+    "recordId",
+    "submissionSha256",
+    "evidenceKind",
+    "state",
+    "releaseTested",
+    "repositoryUrl",
+    "commit",
+    "identity",
+    "checks",
+    "createdAt"
+  ],
+  "properties": {
+    "recordType": { "const": "FINALITY_EXTERNAL_EVIDENCE_RECORD" },
+    "recordVersion": { "const": "1.0" },
+    "recordId": { "type": "string", "pattern": "^FER-[0-9a-f]{24}$" },
+    "submissionSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "evidenceKind": { "enum": ["INDEPENDENT_IMPLEMENTATION", "OUTSIDE_FALSIFICATION"] },
+    "state": { "enum": ["SUBMITTED", "IDENTITY_VERIFIED", "REPRODUCED", "DISCREPANCY", "PASS", "FAILED", "DISPUTED"] },
+    "releaseTested": { "const": "FRP-2.0.0-draft.1-20260829" },
+    "repositoryUrl": { "type": "string", "format": "uri" },
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "identity": {
+      "type": "object",
+      "required": ["name", "identifier", "independenceDisclosure"],
+      "properties": {
+        "name": { "type": "string" },
+        "organization": { "type": "string" },
+        "identifier": { "type": "string" },
+        "independenceDisclosure": { "type": "string" },
+        "isBot": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaValid", "hashesRecomputed", "signatureVerified", "repositoryCommitVerified", "ciVerified", "technicallyReproduced", "independenceReviewed"],
+      "properties": {
+        "schemaValid": { "type": "boolean" },
+        "hashesRecomputed": { "type": "boolean" },
+        "signatureVerified": { "type": "boolean" },
+        "repositoryCommitVerified": { "type": "boolean" },
+        "ciVerified": { "type": "boolean" },
+        "technicallyReproduced": { "type": "boolean" },
+        "independenceReviewed": { "type": "boolean" }
+      }
+    },
+    "discrepancies": { "type": "array", "items": { "type": "string" } },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

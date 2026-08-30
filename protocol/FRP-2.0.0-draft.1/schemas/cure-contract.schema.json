@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/protocol/v2/schemas/cure-contract.schema.json",
+  "title": "Finality Cure Contract",
+  "type": "object",
+  "required": ["protocol", "artifactType", "sourceContractHash", "subject", "outstanding", "executionPolicy", "issuedAt", "cureContractHash"],
+  "properties": {"protocol": {"const": "finality-reality"}, "artifactType": {"const": "FinalityCureContract"}, "sourceContractHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "subject": {"type": "object"}, "outstanding": {"type": "array"}, "executionPolicy": {"const": "IDENTIFICATION_ONLY_NO_AUTONOMOUS_REMEDIATION"}, "issuedAt": {"type": "string", "format": "date-time"}, "cureContractHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+  "additionalProperties": false
+}

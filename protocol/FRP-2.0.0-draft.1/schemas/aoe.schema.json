@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/protocol/v2/schemas/aoe.schema.json",
+  "title": "Authoritative Observation Envelope",
+  "type": "object",
+  "required": ["envelopeType", "envelopeVersion", "observationId", "predicate", "subject", "value", "source", "trustDomain", "evidenceKind", "observedAt", "validFrom", "validUntil", "sourceContract", "integrity", "provenance", "dependencyRefs", "privacy"],
+  "properties": {
+    "envelopeType": {"const": "AuthoritativeObservationEnvelope"}, "envelopeVersion": {"const": "1.0"}, "observationId": {"type": "string", "minLength": 4}, "predicate": {"type": "string"}, "subject": {"type": "string"}, "value": {}, "source": {"type": "string"}, "trustDomain": {"type": "string"},
+    "evidenceKind": {"enum": ["AUTHORITATIVE", "SUPPORTING", "WORKFLOW", "ACTOR_ASSERTION", "DERIVED", "EXTERNAL_WITNESS", "TELEMETRY"]}, "observedAt": {"type": "string", "format": "date-time"}, "validFrom": {"type": "string", "format": "date-time"}, "validUntil": {"type": "string", "format": "date-time"}, "sourceContract": {"type": "string"},
+    "integrity": {"type": "object", "required": ["hashAlgorithm", "contentHash"], "properties": {"hashAlgorithm": {"const": "sha-256"}, "contentHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "signatureAlgorithm": {"type": "string"}, "signature": {"type": "string"}, "keyId": {"type": "string"}}, "additionalProperties": false},
+    "provenance": {"type": "object", "required": ["transport", "collector"], "properties": {"transport": {"type": "string"}, "collector": {"type": "string"}, "transformation": {"type": "string"}, "mappingHash": {"type": "string"}}, "additionalProperties": false},
+    "dependencyRefs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "privacy": {"type": "object", "required": ["disclosure", "classification"], "properties": {"disclosure": {"enum": ["FULL", "PREDICATE_ONLY", "COMMITMENT_ONLY"]}, "classification": {"type": "string"}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

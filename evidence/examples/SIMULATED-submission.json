@@ -1,0 +1,13 @@
+{
+  "_warning": "SIMULATED — documentation only; deliberately fails the strict submission schema and cannot be counted",
+  "submissionType": "FINALITY_EXTERNAL_EVIDENCE_SUBMISSION",
+  "schemaVersion": "1.0",
+  "evidenceKind": "OUTSIDE_FALSIFICATION",
+  "identity": {
+    "name": "Simulated Reviewer",
+    "identifier": "SIMULATED",
+    "independenceDisclosure": "SIMULATED — not external evidence"
+  },
+  "releaseTested": "FRP-2.0.0-draft.1-20260829",
+  "claimedResult": "NO_LISTED_FAILURE_OBSERVED_WITHIN_SCOPE"
+}

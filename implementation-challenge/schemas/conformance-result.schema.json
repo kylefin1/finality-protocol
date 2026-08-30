@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finalitygroup.com/schemas/conformance-result.schema.json",
+  "title": "Independent Implementation Conformance Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "resultType",
+    "schemaVersion",
+    "release",
+    "implementation",
+    "vectorsExpected",
+    "vectorsExecuted",
+    "classificationDisagreements",
+    "lineagePass",
+    "results"
+  ],
+  "properties": {
+    "resultType": { "const": "INDEPENDENT_CONFORMANCE_RESULT" },
+    "schemaVersion": { "const": "1.0" },
+    "release": { "const": "FRP-2.0.0-draft.1-20260829" },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "language", "artifactSha256"],
+      "properties": {
+        "repository": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "language": { "type": "string", "minLength": 1 },
+        "artifactSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "vectorsExpected": { "const": 32 },
+    "vectorsExecuted": { "type": "integer", "minimum": 0, "maximum": 32 },
+    "classificationDisagreements": { "type": "integer", "minimum": 0 },
+    "lineagePass": { "type": "boolean" },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["vectorId", "expected", "actual", "match"],
+        "properties": {
+          "vectorId": { "type": "string", "minLength": 1 },
+          "expected": { "$ref": "#/$defs/state" },
+          "actual": { "$ref": "#/$defs/state" },
+          "match": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "state": {
+      "enum": ["OPEN", "PENDING", "FINAL", "CONTRADICTED", "CURE_REQUIRED", "FAILED", "REOPENED", "SUPERSEDED"]
+    }
+  }
+}
