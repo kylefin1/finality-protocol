@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Complete zero-dollar source publication
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Expand tested publication source
+        run: |
+          mkdir -p /tmp/finality-source
+          tar -xzf bootstrap-source.tar.gz -C /tmp/finality-source
+          rsync -a --delete --exclude=.git /tmp/finality-source/ ./
+      - name: Publish source tree
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish Finality Reality Protocol source"
+          git push origin main
