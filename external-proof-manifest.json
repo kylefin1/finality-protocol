@@ -6,8 +6,8 @@
   "kernel": "FSK-1.0.0",
   "canonicalReleaseManifestSha256": "0ca1344c62c6d054424e77882b0851449ef5bfa46cca5e27c377729f08ee076a",
   "frozenPackageManifestBodySha256": "c133c950332e47a54eb542180dcd64fc1dd7c1b2068538f8eaad8491097c37b4",
-  "fileCount": 129,
-  "contentRoot": "85d66337de993191bf23a670f79621d49d5da797e4c60fbadb391a2829413deb",
+  "fileCount": 130,
+  "contentRoot": "f4397616f1e67f358ae91137b9affdac3f00faf44eca4a1e07b6def2c8c2f108",
   "evidenceClass": "SELLER_CONTROLLED_INFRASTRUCTURE",
   "externalEvidenceCounts": {
     "independentCompatibleImplementations": 0,
