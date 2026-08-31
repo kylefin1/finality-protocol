@@ -183,10 +183,11 @@ the rule used to classify them.
 ## 16. Quorum and dependency semantics
 
 Core policies are `ALL_REQUIRED`, `M_OF_N`, and `TRUST_DOMAIN_THRESHOLD`, with
-optional mandatory sources. M-of-N MUST count distinct independence roots, not
-API endpoints. Three APIs deriving from one database count as one independence
-root. Policies MAY require multiple trust domains. Correlation assessment is a
-control signal, not mathematical proof of independence.
+optional mandatory sources. `M_OF_N` MUST count distinct buyer-approved
+independence roots—not raw source, observation, connector or API counts. Three
+APIs deriving from one database count as one independence root. Policies MAY
+require multiple trust domains. Correlation assessment is a control signal,
+not mathematical proof of independence.
 
 ## 17. Evidence DAG
 
@@ -310,3 +311,14 @@ independent proof. See `WHAT_FINALITY_DOES_NOT_PROVE.md`.
 There are no IANA assignments. `finality://` is a Finality Group namespace in
 this draft, not a registered standards-body scheme. W3C VC and SCITT documents
 are compatibility profiles only. No standards body has approved FRP.
+
+## 31. Frozen object version and legacy boundary
+
+This release is `FRP-2.0.0-draft.1`; normative machine objects use the exact
+`protocolVersion` value `2.0`. The release schemas, TypeScript kernel, Python
+verifier and WASM verification path MUST reject other values. Generic `X.Y`
+compatibility is not part of this frozen release.
+
+`FRP-1.0.0` identifies a historical, superseded reference package retained for
+reproducibility and lineage. It is not a current object version and MUST NOT be
+accepted or presented as an FRP-2.0.0-draft.1 object.
