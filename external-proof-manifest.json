@@ -7,7 +7,7 @@
   "canonicalReleaseManifestSha256": "0ca1344c62c6d054424e77882b0851449ef5bfa46cca5e27c377729f08ee076a",
   "frozenPackageManifestBodySha256": "c133c950332e47a54eb542180dcd64fc1dd7c1b2068538f8eaad8491097c37b4",
   "fileCount": 129,
-  "contentRoot": "2d21e73d5b937b12c1d53c7ace2df620dc9bc250c2bf7aa599e14cd2e1903e95",
+  "contentRoot": "e9d4c3c0b75446ae422982c280aabac3ef4ff32e02533062b06070c2a952718e",
   "evidenceClass": "SELLER_CONTROLLED_INFRASTRUCTURE",
   "externalEvidenceCounts": {
     "independentCompatibleImplementations": 0,
