@@ -186,8 +186,8 @@
     },
     {
       "path": "schemas/event.schema.json",
-      "sha256": "00792805057d0f0105703e44ccb70acffeecf57427fb3795a4c7bfe2779e3ddb",
-      "bytes": 911
+      "sha256": "99d293b75ac8dbebae2c12f8dadb46a71290f99ba4915086f75a8fe5b501e164",
+      "bytes": 909
     },
     {
       "path": "schemas/external-validation-receipt.schema.json",
@@ -196,18 +196,18 @@
     },
     {
       "path": "schemas/finality-certificate-v2.schema.json",
-      "sha256": "c4e783196dd6fda848a97c2bd08b111f2d9b7daf7006946130d0c1ebe8de8981",
-      "bytes": 2177
+      "sha256": "4445c0b832ffa50cf902d49ae4e3080602aab66e1e81832d84a55ffee5787341",
+      "bytes": 2175
     },
     {
       "path": "schemas/outcome-contract.schema.json",
-      "sha256": "d3171204cf13872879e43d925f8d5fc99a79481589d4bec96b046a1757fbc714",
-      "bytes": 4909
+      "sha256": "79e577baf148dbcdd5f6fc54d1136bfee870848e2aa2c138e364c65a1f6aa3e8",
+      "bytes": 4875
     },
     {
       "path": "schemas/state-source-contract.schema.json",
-      "sha256": "657b268653a355d8414972ec5783b6de406930faea5cdb135572c589ace532dc",
-      "bytes": 2637
+      "sha256": "68806c365f3b475042f16fab2df2499c00aae9d1b18fcbbca60d167a1843d80d",
+      "bytes": 2635
     },
     {
       "path": "security/SECURITY-DISCLOSURE.md",
@@ -221,8 +221,8 @@
     },
     {
       "path": "specification/FRP-2.0-draft.1.md",
-      "sha256": "e357dcdef2c46d6b8a402a0e0191c7943faeca4d1174cd4a98b12a33ace60c35",
-      "bytes": 14497
+      "sha256": "a0aad04deebe830c5e111841c82f2d61279819f1b74787bd363a40d313281d38",
+      "bytes": 15096
     },
     {
       "path": "standards/STRATEGY.md",
@@ -300,6 +300,6 @@
       "bytes": 1063
     }
   ],
-  "contentRoot": "79465ac4a0986a8bc41b1f15ee7dc02ede95281ef8e2b197019b8de1de8798d2",
-  "manifestHash": "c133c950332e47a54eb542180dcd64fc1dd7c1b2068538f8eaad8491097c37b4"
+  "contentRoot": "8649c96786e17bc19d9fea5cb578da410ed6e14ef6dd46b9955f790c74bb08fb",
+  "manifestHash": "556ccddc45b30be84891e9f0e00d684761b63df444186cd15134f28e92ae0caf"
 }

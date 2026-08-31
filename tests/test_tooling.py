@@ -41,7 +41,7 @@ class InfrastructureTests(unittest.TestCase):
         original = (release / "release-manifest.json").read_bytes()
         manifest = json.loads(original)
         expected = manifest["manifestHash"]
-        self.assertEqual("c133c950332e47a54eb542180dcd64fc1dd7c1b2068538f8eaad8491097c37b4", expected)
+        self.assertEqual("556ccddc45b30be84891e9f0e00d684761b63df444186cd15134f28e92ae0caf", expected)
         body = {key: value for key, value in manifest.items() if key != "manifestHash"}
         canonical = json.dumps(body, separators=(",", ":"), ensure_ascii=False).encode()
         self.assertEqual(expected, hashlib.sha256(canonical).hexdigest())

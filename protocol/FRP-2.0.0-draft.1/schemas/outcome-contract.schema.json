@@ -6,7 +6,7 @@
   "required": ["protocol", "protocolVersion", "contractType", "contractVersion", "contractId", "namespace", "outcome", "subject", "context", "authority", "requiredState", "contradictions", "reopenIf", "finality", "stopConditions"],
   "properties": {
     "protocol": {"const": "finality-reality"},
-    "protocolVersion": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "protocolVersion": {"const": "2.0"},
     "contractType": {"const": "FinalityOutcomeContract"},
     "contractVersion": {"type": "string", "minLength": 1},
     "contractId": {"type": "string", "minLength": 8},

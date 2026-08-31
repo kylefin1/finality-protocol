@@ -4,6 +4,6 @@
   "title": "Finality Event",
   "type": "object",
   "required": ["eventId", "eventType", "protocolVersion", "context", "objectHash", "eventTime", "producerTime", "integrity"],
-  "properties": {"eventId": {"type": "string"}, "eventType": {"enum": ["OutcomeRequested", "ObservationReceived", "ContradictionRaised", "ClassificationCommitted", "CertificateIssued", "ChallengeRaised", "OutcomeReopened", "OutcomeSuperseded"]}, "protocolVersion": {"type": "string"}, "context": {"type": "string"}, "objectHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "eventTime": {"type": "string", "format": "date-time"}, "producerTime": {"type": "string", "format": "date-time"}, "predecessor": {"type": "string"}, "integrity": {"type": "object"}},
+  "properties": {"eventId": {"type": "string"}, "eventType": {"enum": ["OutcomeRequested", "ObservationReceived", "ContradictionRaised", "ClassificationCommitted", "CertificateIssued", "ChallengeRaised", "OutcomeReopened", "OutcomeSuperseded"]}, "protocolVersion": {"const": "2.0"}, "context": {"type": "string"}, "objectHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "eventTime": {"type": "string", "format": "date-time"}, "producerTime": {"type": "string", "format": "date-time"}, "predecessor": {"type": "string"}, "integrity": {"type": "object"}},
   "additionalProperties": false
 }
