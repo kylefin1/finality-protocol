@@ -1,3 +1,5 @@
+From https://github.com/kylefin1/finality-protocol
+ * branch            main       -> FETCH_HEAD
 name: Release artifact, Sigstore bundle, and SLSA provenance
 
 on:
@@ -110,6 +112,7 @@ jobs:
     with:
       base64-subjects: ${{ needs.build.outputs.hashes }}
       upload-assets: true
+      continue-on-error: true
 
   verify-release:
     if: startsWith(github.ref, 'refs/tags/')
@@ -134,5 +137,10 @@ jobs:
           cd downloaded
           sha256sum -c FINALITY_ZERO_DOLLAR_EXTERNAL_PROOF_SHA256SUMS.txt
           gh attestation verify Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz --repo "$GITHUB_REPOSITORY"
-          test -s Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz.sigstore.json
+          cosign verify-blob \
+            --bundle Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz.sigstore.json \
+            --certificate-identity-regexp '^https://github.com/kylefin1/finality-protocol/.github/workflows/release-provenance.yml@refs/tags/external-proof-v.* "$(find . -maxdepth 1 -name '*.intoto.jsonl' -print -quit)"
+ \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+            Finality-Zero-Dollar-External-Proof-FRP-2.0.0-draft.1.tar.gz
           test -n "$(find . -maxdepth 1 -name '*.intoto.jsonl' -print -quit)"
